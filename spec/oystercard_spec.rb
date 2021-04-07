@@ -4,7 +4,6 @@ describe Oystercard do
 
   context '#initialize' do
     it { is_expected.to respond_to(:balance) }
-    it { is_expected.to respond_to(:max_balance) }
 
     it 'has a default value' do
       expect(subject.balance).to eq(0)
