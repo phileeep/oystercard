@@ -5,6 +5,7 @@ describe Oystercard do
 
 let (:min_fare) { Oystercard::MIN_FARE }
 let (:station){ double :station }
+let (:exit_station){ double :exit_station }
 
   context '#initialize' do
     it { is_expected.to respond_to(:balance) }
@@ -79,9 +80,26 @@ let (:station){ double :station }
     it 'Changes the status of in_journey to false when touched out' do 
       subject.top_up(min_fare)
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(exit_station)
       expect(subject.in_journey?).to eq(false)
+    end
+
+    it 'Stores the value of the exit station' do
+      subject.touch_out(exit_station)
+      expect(subject.exit_station).to eq exit_station
     end
   end
 
+  context '#journey history' do
+    it 'By default returns an empty array' do
+      expect(subject.journey_history).to eq []
+    end
+
+    it 'returns entire journey history when touched out' do
+      subject.top_up(min_fare)
+      subject.touch_in(station)
+      subject.touch_out(exit_station)
+      expect(subject.journey_history).to eq([{"Entry station"=>station, "Exit station" => exit_station}])
+    end
+  end
 end
