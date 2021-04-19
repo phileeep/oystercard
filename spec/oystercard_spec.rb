@@ -5,7 +5,8 @@ describe Oystercard do
 
 let (:min_fare) { Oystercard::MIN_FARE }
 let (:station){ double :station }
-let (:exit_station){ double :exit_station }
+let (:entry_station){ double :station )
+let (:exit_station){ double :station )
 
   context '#initialize' do
     it { is_expected.to respond_to(:balance) }
